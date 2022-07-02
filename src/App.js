@@ -8,9 +8,10 @@ import { Authenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 function App() {
   return (
     <>
-    <Authenticator>
     <Navbar />
-    <Home />
+    <Authenticator>
+    <Home /> 
+  
     </Authenticator>
     </>
   );

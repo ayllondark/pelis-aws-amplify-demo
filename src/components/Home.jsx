@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div>
-      
+
         <main>
           <div className="mx-auto py-6 sm:px-6 lg:px-8">
             {/* Replace with your content */}

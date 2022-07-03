@@ -10,21 +10,9 @@ import awsExports from './aws-exports';
 Amplify.configure(awsExports);
 
 
-const theme = {
-    tokens: {
-        components: {
-            card: {
-              padding: { value: '{space.small}' },
-            },
-          },
-
-    }
-  }
-
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <AmplifyProvider theme={theme}>
+    <AmplifyProvider>
     <App />
     </AmplifyProvider>
 );

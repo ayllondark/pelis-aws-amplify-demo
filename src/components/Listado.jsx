@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Editar from "./Editar";
 
+import {API, graphqlOperation} from 'aws-amplify';
+import {listTodos} from '../graphql/queries';
+
 const Listado = ({listadoState, setListadoState}) => {
   //const [listadoState, setListadoState] = useState([]);
 
@@ -12,11 +15,21 @@ const Listado = ({listadoState, setListadoState}) => {
     conseguirPeliculas();
   }, []);
 
-  const conseguirPeliculas = () => {
-    let peliculas = JSON.parse(localStorage.getItem("pelis"));
-    setListadoState(peliculas);
 
-    return peliculas
+  const conseguirPeliculas = async () => {
+    //let peliculas = JSON.parse(localStorage.getItem("pelis"));
+    try {
+      const peliculasData = await API.graphql(graphqlOperation(listTodos)) ;
+      const peliculas = peliculasData.data.listTodos.items ;
+      setListadoState(peliculas);
+    } catch (error)
+    {console.log('Error Peliculas: ', error)}
+
+
+    /*let peliculas = JSON.parse(localStorage.getItem("pelis"));
+    setListadoState(peliculas);*/
+
+    //return peliculas
   };
 
   const borrarPeli = (id) => {

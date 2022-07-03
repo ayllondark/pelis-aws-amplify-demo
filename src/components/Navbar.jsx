@@ -3,6 +3,8 @@ import React, {Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
 
+import {Auth} from 'aws-amplify';
+
 const user = {
     name: 'Tom Cook',
     email: 'tom@example.com',
@@ -23,8 +25,17 @@ const user = {
   }
 
 
+  async function signOut() {
+    try{
+      await Auth.signOut();
+    }catch (error) {
+      console.log(error);
+    }
+  }
 
-const Navbar = () => {
+
+
+const Navbar = ({}) => {
   return (
     <>
     <div className="min-h-full">
@@ -63,21 +74,12 @@ const Navbar = () => {
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-4 flex items-center md:ml-6">
-                      <button
-                        type="button"
-                        className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
+
 
                       {/* Profile dropdown */}
                       <Menu as="div" className="ml-3 relative">
                         <div>
-                          <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                            <span className="sr-only">Open user menu</span>
-                            <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
-                          </Menu.Button>
+                        <button onClick={signOut} className='bg-red-500 cursor-pointer text-white rounded-md px-6 py-2 mt-0 font-semibold text-base outline-none'>Salir</button>
                         </div>
                         <Transition
                           as={Fragment}

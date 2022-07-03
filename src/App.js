@@ -2,16 +2,18 @@ import React from 'react';
 //import './styles/styles.css';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
+ 
+import { Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
-import { Authenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 
 function App() {
+
   return (
     <>
-    <Navbar />
     <Authenticator>
+    <Navbar />
     <Home /> 
-  
     </Authenticator>
     </>
   );

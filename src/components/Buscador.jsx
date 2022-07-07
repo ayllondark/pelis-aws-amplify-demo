@@ -6,6 +6,7 @@ const Buscador = ({listadoState, setListadoState}) => {
   const [noEncontrado, setNoEncontrado] = useState(false);
 
   const buscarPeli = (e) => {
+    e.preventDefault();
     // Crear estado y actualizarlo
     setBusqueda(e.target.value);
     //console.log(busqueda);
@@ -15,7 +16,7 @@ const Buscador = ({listadoState, setListadoState}) => {
     });
     // Comprobar si hay resultados
     if(busqueda.length <=1 || pelis_encontradas <=0){
-      pelis_encontradas = JSON.parse(localStorage.getItem('pelis')); // Devolvemos todo lo q hay en LocalStorage
+      pelis_encontradas = listadoState; // Devolvemos todo lo q hay en LocalStorage
       setNoEncontrado(true);
     } else {
       setNoEncontrado(false);

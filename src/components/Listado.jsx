@@ -3,6 +3,8 @@ import Editar from "./Editar";
 
 import {API, graphqlOperation} from 'aws-amplify';
 import {listTodos} from '../graphql/queries';
+import { deleteTodo } from '../graphql/mutations';
+
 
 const Listado = ({listadoState, setListadoState}) => {
   //const [listadoState, setListadoState] = useState([]);
@@ -32,18 +34,32 @@ const Listado = ({listadoState, setListadoState}) => {
     //return peliculas
   };
 
-  const borrarPeli = (id) => {
-    //console.log(id);
-    // Conseguir peliculas almacenadas en LocalStorage
-    let pelis_almacenadas = conseguirPeliculas();
+  const borrarPeli = async (id) => {
+
+    try {
+      let pelis_almacenadas = conseguirPeliculas();
+      
+      const peliculasData = await API.graphql(graphqlOperation(deleteTodo, {input: { id: id }} ));
+      const deletepelicula = peliculasData.data.deleteTodo;
+      let nuevo_array_pelis = pelis_almacenadas.filter(peli => peli.id !== parseInt(deletepelicula));
+      console.log(deletepelicula);
+      console.log(nuevo_array_pelis);
+      setListadoState(nuevo_array_pelis);
+
+    } catch (error)
+    {console.log('Error Eliminar Peliculas: ', error)}
+
+
+
+    
     // Filtrar esas peliculas del array para que elimine del aray la que no quiero
-    let nuevo_array_pelis = pelis_almacenadas.filter(peli => peli.id !== parseInt(id));
+    //let nuevo_array_pelis = pelis_almacenadas.filter(peli => peli.id !== parseInt(id));
     //console.log(pelis_almacenadas, nuevo_array_pelis);
     // Actualizar estado del Listado
-    setListadoState(nuevo_array_pelis);
+    //setListadoState(nuevo_array_pelis);
 
     // Actualizar los datos en el LpcalStorage
-    localStorage.setItem('pelis', JSON.stringify(nuevo_array_pelis));  // Transformo de un array d eobjetos a un JSON String
+    //localStorage.setItem('pelis', JSON.stringify(nuevo_array_pelis));  // Transformo de un array d eobjetos a un JSON String
   }
 
   return (

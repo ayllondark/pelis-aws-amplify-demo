@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import GuardarEnStorage from '../helpers/GuardarEnStorage';
 
+import {API, graphqlOperation} from 'aws-amplify';
+import { createTodo } from '../graphql/mutations';
+
 const Crear = ({setListadoState}) => {
 
   const titulo = 'Añadir Pelicula';
   const [peliState, setPeliState] = useState({titulo: '', descripcion: ''})
 
-  const conseguirDatosForm = e => {
+  const conseguirDatosForm =async e  => {
     e.preventDefault();
     
     let target = e.target; // Consigue todos los elementos del form
@@ -20,15 +23,21 @@ const Crear = ({setListadoState}) => {
       descripcion
     }
 
-    setPeliState(peli);
+    //createTodo(peli);
+    try {
+      const peliculasData = await API.graphql(graphqlOperation(createTodo, {input: peli} ));
+      const addpelicula = peliculasData.data.createTodo;
+      setPeliState(addpelicula);
 
+      //setPeliState(addpelicula);
     /* Guardar estado */
     setListadoState(elementos => {
-      return [...elementos, peli];
+      return [...elementos, addpelicula];
     })
-    
-    /* Guardar en el almacenamiento local */
-    GuardarEnStorage('pelis', peli);
+
+    } catch (error) {console.log('Error creating pelicula: ', error)
+  }
+
 
 
   }

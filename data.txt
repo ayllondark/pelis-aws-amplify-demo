@@ -1,0 +1,8 @@
+
+mutation CreateTodo{
+    createTodo(input:{ id: 123, titulo:"Rapidos y Furiosos",descripcion: "nueva temporada"}) {
+      id
+      titulo
+      descripcion
+    }
+  }

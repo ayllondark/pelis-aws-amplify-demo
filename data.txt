@@ -6,3 +6,7 @@ mutation CreateTodo{
       descripcion
     }
   }
+
+
+
+npm i @aws-amplify/cli -g
